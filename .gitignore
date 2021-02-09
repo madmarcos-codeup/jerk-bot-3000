@@ -1,0 +1,8 @@
+.DS_Store
+dbauth.js
+node_modules
+deploy.sh
+.env
+logs
+keys
+package-lock.json
