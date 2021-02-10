@@ -22,6 +22,8 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.0"
   }
 }
