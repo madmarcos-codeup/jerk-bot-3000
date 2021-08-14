@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mut-deployment
+  labels:
+    app: mutillidae
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mutillidae
+  template:
+    metadata:
+      labels:
+        app: mutillidae
+    spec:
+      containers:
+      - name: mutillidae
+        image: bltsec/mutillidae-docker
+        ports:
+        - containerPort: 80
+        - containerPort: 443

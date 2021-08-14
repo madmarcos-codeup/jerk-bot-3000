@@ -1,0 +1,19 @@
+https://discord.com/api/oauth2/authorize?client_id=808836711689486356&permissions=8&redirect_uri=https%3A%2F%2Fcs3743.fulgentcorp.com%3A12250&scope=bot
+
+TO DEPLOY:
+create a k8s secret
+key: docrob-cred
+
+
+# use docker.io tokens instead of a password!!
+kubectl create secret docker-registry docrob-cred --docker-server=docker.io --docker-username=docrob1337 --docker-password=cd176d3a-0282-4c6d-a485-e83289dda30a --docker-email=mark.robinson@utsa.edu
+
+copied the deploy.yaml script to cc server
+
+microk8s kubectl apply -f deploy.yaml
+
+# shell into the pod
+microk8s kubectl exec --stdin --tty jerkbot-deployment-6df95c6686-wwpjc -- /bin/bash
+
+# update when new code pushed to registry
+microk8s kubectl rollout restart jerkbot-deployment

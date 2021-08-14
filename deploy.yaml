@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jerkbot-deployment
+  labels:
+    app: jerkbot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jerkbot
+  template:
+    metadata:
+      labels:
+        app: jerkbot
+    spec:
+      containers:
+      - name: jerkbot
+        image: docrob1337/jerkbot:latest
+        ports:
+        - containerPort: 15000
+      imagePullSecrets:
+        - name: docrob-cred

@@ -8,34 +8,54 @@ const logger = utilities.getLogger();
 
 const client = new Discord.Client();
 
+client.on('ready', () => {
+    console.info(`Logged in as ${client.user.tag}!`);
+});
+
 client.on("message", function(message) { 
+    logger.info("incoming message on " + message.channel.name + " from " + message.author);
+    if(message.author.bot) {
+        logger.info("ignoring bot...");
+        return;
+    }
+    let roleId = getRoleId(message.guild, "punching bag");
+    let role = message.guild.roles.cache.get(roleId);
+    logger.info("role id " + roleId);
     try {
         let author = message.author.username;
-        let messageBody = message.content;
 
-        let roleId = getRoleId(message.guild, "punching bag");
-        logger.info("role id " + roleId);
+        if (message.content.startsWith('!jerkbot punchme')) {
+            message.member.roles.add(role).catch(console.error);;
+            message.channel.send("Well well... someone's feeling tough.");
+        } else if (message.content.startsWith('!jerkbot uncle')) {
+            message.member.roles.remove(role).catch(console.error);;
+            message.channel.send("Toughen up, cupcake");
+        } else if (message.content.startsWith('!jerkbot help')) {
+            message.channel.send("Hey look! " + author + " needs instructions!!!\n*sigh*\njerkbot punchme|uncle");
+        } else if(message.channel.name == "general") {
 
-        let isPunchingBag = hasRoleByName(message.member, "punching bag");
-        if(isPunchingBag) {
-            // if so, determine if it is time to punch
-            if(Math.random() <= process.env.DAMAGE_FREQUENCY) {
-                // pick a random response
-                let idx = Math.trunc(Math.random() * responses.length);
-                let punchString = responses[idx];
-                console.log(idx + " " + punchString);
+            let messageBody = message.content;
+            if(hasRoleByName(message.member, "punching bag")) {
+                // if so, determine if it is time to punch
+                if(Math.random() <= process.env.DAMAGE_FREQUENCY) {
+                    // pick a random response
+                    let idx = Math.trunc(Math.random() * responses.length);
+                    let punchString = responses[idx];
+                    console.log(idx + " " + punchString);
 
-                logger.info(author + " IS a punching bag and got '" + punchString + "'");
-                if(punchString && punchString != "")
-                    message.channel.send(punchString);
-                else
-                    message.channel.send("I'm supposed to say something snarky but I crashed instead :(");
-        
+                    logger.info(author + " IS a punching bag and got '" + punchString + "'");
+                    if(punchString && punchString != "")
+                        message.channel.send(punchString);
+                    else {
+                        logger.error(err);
+                        message.channel.send("I'm supposed to say something snarky but I crashed instead :(");
+                    }
+                } else {
+                    logger.info(author + " IS a punching bag but ducked");
+                }
             } else {
-                logger.info(author + " IS a punching bag but ducked");
+                logger.info(author + " is NOT a punching bag");
             }
-        } else {
-            logger.info(author + " is NOT a punching bag");
         }
     } catch(err) {
         logger.error(err);

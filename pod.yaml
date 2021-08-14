@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jerkbot
+spec:
+  containers:
+  - name: jerkbot
+    image: docker.io/docrob1337/jerkbot:latest
+  imagePullSecrets:
+  - name: docrob-cred

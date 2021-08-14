@@ -1,0 +1,25 @@
+---
+stages:
+  - build
+  - test
+  - deploy
+build-docker : 
+    stage : build
+    script :
+        - echo "skipping"
+unit-test : 
+    stage : test
+    script :
+        - echo "skipping"
+curl-test : 
+    stage : test
+    script :
+        - echo "skipping"
+deploy-utsa :
+    stage : deploy
+    script :
+        - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" docker.io
+        - docker build -t docrob1337/node-demo .
+        - docker push docrob1337/node-demo
+        - kubectl rollout restart deployment node-demo
+...
