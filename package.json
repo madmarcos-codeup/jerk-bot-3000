@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@easel3.cs.utsarr.net:docrob/jerk-bot.git"
+    "url": "git@github.com:madmarcos-codeup/jerk-bot-3000.git"
   },
   "keywords": [
     "jerk",
@@ -20,7 +20,7 @@
   "author": "Docrob",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.5.1",
+    "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.7",
     "winston": "^3.3.3",

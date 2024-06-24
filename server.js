@@ -32,10 +32,16 @@ client.on("message", function(message) {
             message.channel.send("Toughen up, cupcake");
         } else if (message.content.startsWith('!jerkbot help')) {
             message.channel.send("Hey look! " + author + " needs instructions!!!\n*sigh*\njerkbot punchme|uncle");
-        } else if(message.channel.name == "general") {
-
+        } else if(message.channel.name.includes("general")) {
             let messageBody = message.content;
             if(hasRoleByName(message.member, "punching bag")) {
+                if(messageBody.toUpperCase().includes("MOONCAKES")) {
+                    const person = message.author.username;
+                    const msg = person + " demands mooncakes.";
+                    console.log(msg);
+                    message.channel.send(msg);
+                    return;
+                }
                 // if so, determine if it is time to punch
                 if(Math.random() <= process.env.DAMAGE_FREQUENCY) {
                     // pick a random response
@@ -59,6 +65,7 @@ client.on("message", function(message) {
         }
     } catch(err) {
         logger.error(err);
+        console.log(err);
         message.channel.send("I'm supposed to say something snarky but I crashed instead :(");
     }
 });   
